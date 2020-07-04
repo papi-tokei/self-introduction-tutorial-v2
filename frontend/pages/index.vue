@@ -48,6 +48,7 @@
           </v-col>
         </v-row>
       </v-col>
+
       <v-dialog v-model="dialog" persistent max-width="450">
         <v-card>
           <v-card-title class="headline">Edit Your Profile</v-card-title>
@@ -94,10 +95,8 @@
               ></v-text-field>
             </v-form>
           </v-card-text>
-
           <v-card-actions>
             <v-spacer></v-spacer>
-
             <v-btn color="red darken-1" text @click="cancelProfile">
               Cancel
             </v-btn>
@@ -118,9 +117,16 @@ const URL =
 export default {
   components: {},
   async asyncData({ $axios }) {
-    const response = await $axios.$post(URL, { method: 'get' })
-    return {
-      profileData: response[0],
+    try {
+      const response = await $axios.$post(URL, { method: 'get' })
+      return {
+        profileData: response[0],
+      }
+    } catch (err) {
+      console.error(err)
+      return {
+        profileData: null,
+      }
     }
   },
   data() {

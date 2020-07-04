@@ -1,95 +1,127 @@
 <template>
-  <v-layout column justify-center align-center>
-    <v-flex xs12 sm8 md6>
-      <div class="text-center">
-        <logo />
-        <vuetify-logo />
-      </div>
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
-        </v-card-title>
-        <v-card-text>
-          <p>
-            Vuetify is a progressive Material Design component framework for
-            Vue.js. It was designed to empower developers to create amazing
-            applications.
-          </p>
-          <p>
-            For more information on Vuetify, check out the
-            <a
-              href="https://vuetifyjs.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              documentation </a
-            >.
-          </p>
-          <p>
-            If you have questions, please join the official
-            <a
-              href="https://chat.vuetifyjs.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="chat"
-            >
-              discord </a
-            >.
-          </p>
-          <p>
-            Find a bug? Report it on the github
-            <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="contribute"
-            >
-              issue board </a
-            >.
-          </p>
-          <p>
-            Thank you for developing with Vuetify and I look forward to bringing
-            more exciting features in the future.
-          </p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3" />
-          <a
-            href="https://nuxtjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
+  <v-container>
+    <v-row align="center" justify="center">
+      <v-col cols="10">
+        <v-row class="main_contents">
+          <v-col
+            sm="4"
+            md="4"
+            lg="4"
+            xl="4"
+            cols="12"
+            class="d-flex flex-column justify-start align-center"
           >
-            Nuxt Documentation
-          </a>
-          <br />
-          <a
-            href="https://github.com/nuxt/nuxt.js"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt GitHub
-          </a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn color="primary" nuxt to="/inspire">
-            Continue
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-flex>
-  </v-layout>
+            <v-img
+              :src="require('~/assets/icon_image.png')"
+              height="125"
+              max-height="125"
+              width="125"
+              max-width="125"
+            ></v-img>
+            <h3 class="mt-6">Taro Tanaka</h3>
+            <v-btn dark class="mt-4" @click="dialog = true">Edit</v-btn>
+          </v-col>
+
+          <v-col sm="8" md="8" lg="8" xl="8" cols="12">
+            <div>
+              <h3>Special Skill</h3>
+              <p>
+                特技は特にありません。
+              </p>
+            </div>
+            <div class="mt-6">
+              <h3>Hobby</h3>
+              <ul>
+                <li>Dead by Daylight</li>
+                <li>寝ること</li>
+                <li>走ること</li>
+              </ul>
+            </div>
+            <div class="mt-6">
+              <h3>Likes and Dislikes</h3>
+              <P>食べ物に好き嫌いはありません。</P>
+            </div>
+            <div class="mt-6">
+              <h3>Comment</h3>
+              <p>よろしくお願いします</p>
+            </div>
+          </v-col>
+        </v-row>
+      </v-col>
+      <v-dialog v-model="dialog" persistent max-width="450">
+        <v-card>
+          <v-card-title class="headline">Edit Your Profile</v-card-title>
+          <v-card-text>
+            <v-form ref="form" lazy-validation>
+              <v-text-field
+                v-model="skill"
+                :counter="100"
+                label="Special Skill"
+                required
+              ></v-text-field>
+              <v-text-field
+                v-model="hobby[0]"
+                label="Hobby1"
+                required
+              ></v-text-field>
+              <v-text-field
+                v-model="hobby[1]"
+                label="Hobby2"
+                required
+              ></v-text-field>
+              <v-text-field
+                v-model="hobby[2]"
+                label="Hobby3"
+                required
+              ></v-text-field>
+              <v-text-field
+                v-model="like"
+                label="like"
+                :counter="100"
+                required
+              ></v-text-field>
+            </v-form>
+          </v-card-text>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+
+            <v-btn color="red darken-1" text @click="cancelProfile">
+              Cancel
+            </v-btn>
+            <v-btn color="green darken-1" text @click="saveProfile">
+              Save
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
-
 export default {
-  components: {
-    Logo,
-    VuetifyLogo,
+  components: {},
+  data() {
+    return { dialog: false, skill: '', hobby: ['', '', ''], like: '' }
+  },
+  methods: {
+    cancelProfile() {
+      this.skill = ''
+      this.hobby = ['', '', '']
+      this.like = ''
+      this.dialog = false
+    },
+    saveProfile() {
+      this.dialog = false
+    },
   },
 }
 </script>
+
+<style>
+.main_contents {
+  border: solid;
+  border-color: gray;
+}
+</style>

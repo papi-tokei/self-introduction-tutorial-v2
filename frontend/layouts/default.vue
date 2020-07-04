@@ -15,8 +15,11 @@
         <nuxt />
       </v-container>
     </v-main>
-    <v-footer app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
+    <v-footer app height="32">
+      <v-col class="text-center py-0"
+        >&copy; {{ new Date().getFullYear() }} papi-tokei all rights
+        reserved</v-col
+      >
     </v-footer>
   </v-app>
 </template>

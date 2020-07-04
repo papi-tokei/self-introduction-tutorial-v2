@@ -106,6 +106,9 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+      <v-snackbar v-model="snackbar" dark top color="error">
+        {{ errorMessage }}
+      </v-snackbar>
     </v-row>
   </v-container>
 </template>
@@ -132,6 +135,8 @@ export default {
   data() {
     return {
       dialog: false,
+      snackbar: false,
+      errorMessage: '',
       name: 'Taro Tanaka',
       skill: '特技は特にありません。',
       hobby: ['Dead by Daylight', '寝ること', '走ること'],
@@ -158,20 +163,26 @@ export default {
       this.dialog = false
     },
     async saveProfile() {
-      await this.$axios.$post(URL, {
-        method: 'update',
-        data: {
-          id: '1',
-          name: this.editName,
-          skill: this.editSkill,
-          'hobby-list': this.editHobby,
-          like: this.editLike,
-          comment: this.editComment,
-        },
-      })
-      const response = await this.$axios.$post(URL, { method: 'get' })
-      this.profileData = response[0]
-      this.updateData()
+      try {
+        await this.$axios.$post(URL, {
+          method: 'update',
+          data: {
+            id: '1',
+            name: this.editName,
+            skill: this.editSkill,
+            'hobby-list': this.editHobby,
+            like: this.editLike,
+            comment: this.editComment,
+          },
+        })
+        const response = await this.$axios.$post(URL, { method: 'get' })
+        this.profileData = response[0]
+        this.updateData()
+      } catch (err) {
+        this.errorMessage = err
+        this.snackbar = true
+      }
+
       this.dialog = false
     },
     updateData() {

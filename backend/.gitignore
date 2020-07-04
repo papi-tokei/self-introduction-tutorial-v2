@@ -2,6 +2,7 @@
 !jest.config.js
 *.d.ts
 node_modules
+!.eslintrc.js
 
 # CDK asset staging directory
 .cdk.staging
@@ -9,3 +10,5 @@ cdk.out
 
 # Parcel default cache directory
 .parcel-cache
+
+.mypy_cache
